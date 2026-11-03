@@ -1,0 +1,248 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Web Security Platform</title>
+
+<style>
+* {
+    box-sizing: border-box;
+}
+
+body {
+    margin: 0;
+    font-family: Arial, sans-serif;
+    background: #08111f;
+    color: #e8f0ff;
+}
+
+header {
+    padding: 24px;
+    background: #101d30;
+    border-bottom: 1px solid #243750;
+}
+
+header h1 {
+    margin: 0;
+    color: #45e0c0;
+}
+
+header p {
+    color: #a9bad0;
+}
+
+.container {
+    max-width: 1100px;
+    margin: 30px auto;
+    padding: 20px;
+}
+
+.panel {
+    background: #111f33;
+    padding: 24px;
+    border-radius: 15px;
+    margin-bottom: 22px;
+    border: 1px solid #263a55;
+}
+
+input {
+    width: 75%;
+    padding: 14px;
+    border-radius: 8px;
+    border: 1px solid #405675;
+    background: #08111f;
+    color: white;
+}
+
+button {
+    padding: 14px 22px;
+    background: #35d6b3;
+    border: none;
+    border-radius: 8px;
+    font-weight: bold;
+    cursor: pointer;
+}
+
+button:hover {
+    background: #21b99a;
+}
+
+.cards {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(190px, 1fr));
+    gap: 18px;
+}
+
+.card {
+    background: #172940;
+    border-radius: 12px;
+    padding: 22px;
+}
+
+.label {
+    color: #a9bad0;
+    font-size: 14px;
+}
+
+.value {
+    font-size: 28px;
+    margin-top: 12px;
+    color: #45e0c0;
+    overflow-wrap: anywhere;
+}
+
+.score-circle {
+    width: 150px;
+    height: 150px;
+    margin: 15px auto;
+    border: 9px solid #35d6b3;
+    border-radius: 50%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.score-circle strong {
+    font-size: 38px;
+}
+
+ul {
+    line-height: 2;
+    overflow-wrap: anywhere;
+}
+
+.error {
+    color: #ff8585;
+}
+
+.success {
+    color: #45e0c0;
+}
+
+pre {
+    white-space: pre-wrap;
+    overflow-wrap: anywhere;
+    color: #cbd9ec;
+}
+
+footer {
+    text-align: center;
+    padding: 25px;
+    color: #91a5bf;
+}
+
+@media (max-width: 600px) {
+    input {
+        width: 100%;
+        margin-bottom: 12px;
+    }
+
+    button {
+        width: 100%;
+    }
+}
+</style>
+</head>
+
+<body>
+
+<header>
+    <h1>🛡️ Web Security Platform</h1>
+    <p>Website Security Header Scanner & Assessment Dashboard</p>
+</header>
+
+<div class="container">
+
+    <div class="panel">
+        <h2>Scan a Website</h2>
+        <p>Enter a website you own or have permission to test.</p>
+
+        <form method="POST" action="/">
+            <input
+                type="text"
+                name="url"
+                placeholder="https://example.com"
+                value="{{ target_url or '' }}"
+                required
+            >
+            <button type="submit">Start Scan</button>
+        </form>
+
+        {% if error %}
+            <p class="error">{{ error }}</p>
+        {% endif %}
+    </div>
+
+    {% if result %}
+    <div class="panel">
+        <h2>Security Overview</h2>
+
+        <div class="score-circle">
+            <strong>{{ security_score }}</strong>
+            <span>/ 100</span>
+        </div>
+
+        <p style="text-align:center">
+            Risk Level:
+            <strong>{{ risk_level }}</strong>
+        </p>
+
+        <div class="cards">
+            <div class="card">
+                <div class="label">HTTP Status</div>
+                <div class="value">{{ result.status }}</div>
+            </div>
+
+            <div class="card">
+                <div class="label">HTTPS Enabled</div>
+                <div class="value">
+                    {{ "Yes" if result.https else "No" }}
+                </div>
+            </div>
+
+            <div class="card">
+                <div class="label">Headers Found</div>
+                <div class="value">{{ result.headers|length }}/5</div>
+            </div>
+        </div>
+    </div>
+
+    <div class="panel">
+        <h2>Security Headers</h2>
+
+        <ul>
+        {% for header in result.headers %}
+            <li class="success">✓ {{ header }}</li>
+        {% endfor %}
+
+        {% for header in result.missing_headers %}
+            <li class="error">✗ Missing: {{ header }}</li>
+        {% endfor %}
+        </ul>
+    </div>
+
+    <div class="panel">
+        <h2>Recommendations</h2>
+        <ul>
+        {% for recommendation in recommendations %}
+            <li>{{ recommendation }}</li>
+        {% endfor %}
+        </ul>
+    </div>
+
+    <div class="panel">
+        <h2>Scan Report</h2>
+        <pre>{{ report }}</pre>
+    </div>
+    {% endif %}
+
+</div>
+
+<footer>
+    Web Security Platform | Educational Security Assessment
+</footer>
+
+</body>
+</html>

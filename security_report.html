@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Web Security Report</title>
+<style>
+body {
+    font-family: Arial, sans-serif;
+    margin: 30px;
+    background: #f2f5f9;
+    color: #222;
+}
+.container {
+    max-width: 900px;
+    margin: auto;
+    background: white;
+    padding: 25px;
+    border-radius: 12px;
+}
+h1 { color: #173b68; }
+table {
+    width: 100%;
+    border-collapse: collapse;
+}
+th, td {
+    border: 1px solid #ccc;
+    padding: 12px;
+    text-align: left;
+}
+th { background: #173b68; color: white; }
+.score { font-size: 22px; font-weight: bold; }
+</style>
+</head>
+<body>
+<div class="container">
+<h1>Web Security Report</h1>
+<p><b>Target:</b> https://example.com/</p>
+<p><b>Scan Time:</b> 2026-10-31 05:00:50</p>
+<p><b>HTTP Status:</b> 200</p>
+<p><b>HTTPS:</b> True</p>
+<p class="score">Header Score: 0/100</p>
+<p class="score">Header Grade: F</p>
+<table>
+<tr><th>Security Header</th><th>Status</th><th>Recommendation</th></tr>
+
+            <tr>
+                <td>Content-Security-Policy</td>
+                <td>MISSING</td>
+                <td>Helps reduce XSS risks.</td>
+            </tr>
+            
+            <tr>
+                <td>Strict-Transport-Security</td>
+                <td>MISSING</td>
+                <td>Encourages secure HTTPS connections.</td>
+            </tr>
+            
+            <tr>
+                <td>X-Content-Type-Options</td>
+                <td>MISSING</td>
+                <td>Helps prevent MIME-type sniffing.</td>
+            </tr>
+            
+            <tr>
+                <td>X-Frame-Options</td>
+                <td>MISSING</td>
+                <td>Helps reduce clickjacking risks.</td>
+            </tr>
+            
+            <tr>
+                <td>Referrer-Policy</td>
+                <td>MISSING</td>
+                <td>Controls referrer information.</td>
+            </tr>
+            
+            <tr>
+                <td>Permissions-Policy</td>
+                <td>MISSING</td>
+                <td>Controls browser feature access.</td>
+            </tr>
+            
+</table>
+<p><b>Note:</b> This checks HTTP security headers only.
+It is not a complete security assessment.</p>
+</div>
+</body>
+</html>
