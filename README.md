@@ -168,3 +168,7 @@ GitHub: https://github.com/masoom849
 ⭐ If you find this project useful, feel free to explore and learn from it.
 
 Thank you for visiting my project!
+## Project Dashboard
+
+![Web Security Platform Dashboard]
+(screenshots/dashboard.png)
